@@ -3,41 +3,54 @@
 // enviar notificaciones por Email, SMS o WhatsApp. Cada clase implementará su forma de
 // envío.
 
-abstract class Pago {
-    abstract procesarPago(monto: number, saldo: number): number;
+abstract class Notis {
+    abstract enviar(): void;
 }
 
-class PagoEfectivo extends Pago {
-    procesarPago(monto: number, saldo: number): number {
-        console.log(`Pagando $${monto} en efectivo.`);
-        return saldo - monto;
+class Email extends Notis {
+    constructor(private correo: string) {
+        super();
+    }
+
+    enviar(): void {
+        console.log(`Enviando Email a ${this.correo}: Tu reporte está listo.`);
     }
 }
 
-class PagoTarjeta extends Pago {
-    procesarPago(monto: number, saldo: number): number {
-        console.log(`Pagando $${monto} con tarjeta.`);
-        return saldo - monto;
+class SMS extends Notis {
+    constructor(private numero: string) {
+        super();
+    }
+
+    enviar(): void {
+        console.log(`Enviando SMS al número ${this.numero}: Código de verificación: 1234`);
     }
 }
 
-class PagoTransferencia extends Pago {
-    procesarPago(monto: number, saldo: number): number {
-        console.log(`Pagando $${monto} con transferencia bancaria.`);
-        return saldo - monto;
+class WhatsApp extends Notis {
+    constructor(private numero: string) {
+        super();
+    }
+
+    enviar(): void {
+        console.log(`Enviando WhatsApp a ${this.numero}: Hola Henry, revisa el sistema.`);
     }
 }
 
-let saldo = 1000; // saldo inicial
+class GestorNotificaciones {
+    enviarNotificacion(notificacion: Notis) {
+        console.log("Procesando notificación...");
+        notificacion.enviar();
+        console.log("Notificación enviada.\n");
+    }
+}
 
-const efectivo = new PagoEfectivo();
-saldo = efectivo.procesarPago(200, saldo);
-console.log(`Saldo restante: $${saldo}`);
+const gestor = new GestorNotificaciones();
 
-const tarjeta = new PagoTarjeta();
-saldo = tarjeta.procesarPago(300, saldo);
-console.log(`Saldo restante: $${saldo}`);
+const email = new Email("henry@example.com");
+const sms = new SMS("+50370000000");
+const whatsapp = new WhatsApp("+50370000000");
 
-const transferencia = new PagoTransferencia();
-saldo = transferencia.procesarPago(150, saldo);
-console.log(`Saldo restante: $${saldo}`);
+gestor.enviarNotificacion(email);
+gestor.enviarNotificacion(sms);
+gestor.enviarNotificacion(whatsapp);

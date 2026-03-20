@@ -4,32 +4,40 @@
 // debe implementar su proceso de pago.
 
 abstract class Pago {
-    abstract procesarPago(): void;
+    abstract procesarPago(monto: number, saldo: number): number;
 }
 
 class PagoEfectivo extends Pago {
-    procesarPago(): void {
-        console.log("Estás pagando en efectivo.");
+    procesarPago(monto: number, saldo: number): number {
+        console.log(`Pagando $${monto} en efectivo.`);
+        return saldo - monto;
     }
 }
 
 class PagoTarjeta extends Pago {
-    procesarPago(): void {
-        console.log("Estás pagando con tarjeta.");
+    procesarPago(monto: number, saldo: number): number {
+        console.log(`Pagando $${monto} con tarjeta.`);
+        return saldo - monto;
     }
 }
 
 class PagoTransferencia extends Pago {
-    procesarPago(): void {
-        console.log("Estás pagando con transferencia bancaria.");
+    procesarPago(monto: number, saldo: number): number {
+        console.log(`Pagando $${monto} con transferencia bancaria.`);
+        return saldo - monto;
     }
 }
 
+let saldo = 1000; // saldo inicial
+
 const efectivo = new PagoEfectivo();
-efectivo.procesarPago();
+saldo = efectivo.procesarPago(200, saldo);
+console.log(`Saldo restante: $${saldo}`);
 
 const tarjeta = new PagoTarjeta();
-tarjeta.procesarPago();
+saldo = tarjeta.procesarPago(300, saldo);
+console.log(`Saldo restante: $${saldo}`);
 
 const transferencia = new PagoTransferencia();
-transferencia.procesarPago();
+saldo = transferencia.procesarPago(150, saldo);
+console.log(`Saldo restante: $${saldo}`);
