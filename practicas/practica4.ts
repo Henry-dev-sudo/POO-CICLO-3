@@ -40,3 +40,50 @@
 
 // Ejercicio 2: 
 
+abstract class OperacionTexto {
+  abstract ejecutar(texto: string): string;
+}
+
+class Revertir extends OperacionTexto {
+  ejecutar(texto: string): string {
+    return texto.split("").reverse().join("");
+  }
+}
+
+class Mayusculas extends OperacionTexto {
+  ejecutar(texto: string): string {
+    return texto.toUpperCase();
+  }
+}
+
+class Alternar extends OperacionTexto {
+  ejecutar(texto: string): string {
+    return texto
+      .split("")
+      .map((c, i) => (i % 2 === 0 ? c.toUpperCase() : c.toLowerCase()))
+      .join("");
+  }
+}
+
+class EntradaDatos {
+  constructor(
+    public texto: string,
+    public operaciones: OperacionTexto[]
+  ) {}
+}
+
+const entrada = new EntradaDatos("hola mundo", [
+  new Mayusculas(),
+  new Revertir(),
+  new Alternar(),
+]);
+
+let resultado = entrada.texto;
+console.log(`Entrada: "${resultado}"`);
+
+for (const op of entrada.operaciones) {
+  resultado = op.ejecutar(resultado);
+  console.log(`${op.constructor.name}: "${resultado}"`);
+}
+
+console.log(`\nResultado final: "${resultado}"`);

@@ -45,7 +45,7 @@
 // // cuentaAhorro.setSaldo(usuarioAdmin,100);
 // // console.log(cuentaAhorro.getSaldo(usuario));
 
-//EJERCICIO 2:
+// EJERCICIO 2:
 
 // const usuarioAdmin = { nombre: "admin", role: "admin" };
 // const usuario = { nombre: "usuario", role: "cliente" };
